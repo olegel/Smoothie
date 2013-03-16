@@ -22,9 +22,9 @@
 #include "libs/utils.h"
 
 #include "libs/USBCDCMSC/USBCDCMSC.h"
-SDFileSystem sd(p5, p6, p7, p8, "sd");  // LPC17xx specific : comment if you are not using a SD card ( for example with a mBed ).
+SDFileSystem sd1(P1_24, P1_23, P1_20, P1_21, "sd"); // MiniMD board pinout
 //LocalFileSystem local("local");       // LPC17xx specific : comment if you are not running a mBed
-USBCDCMSC cdcmsc(&sd);                  // LPC17xx specific : Composite serial + msc USB device
+//USBCDCMSC cdcmsc(&sd);                  // LPC17xx specific : Composite serial + msc USB device
 
 
 int main() {
@@ -33,7 +33,7 @@ int main() {
 
     kernel->streams->printf("Smoothie ( grbl port ) version 0.7.0 \r\n");
 
-    kernel->add_module( new Laser(p21) );
+    //kernel->add_module( new Laser(p21) );
     kernel->add_module( new Extruder() );
     kernel->add_module( new SimpleShell() );
     kernel->add_module( new Configurator() );
