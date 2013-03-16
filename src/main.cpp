@@ -4,7 +4,6 @@
       Smoothie is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
       You should have received a copy of the GNU General Public License along with Smoothie. If not, see <http://www.gnu.org/licenses/>.
 */
-
 #include "libs/Kernel.h"
 #include "modules/tools/laser/Laser.h"
 #include "modules/tools/extruder/Extruder.h"
@@ -20,9 +19,10 @@
 #include "libs/Config.h"
 #include "libs/nuts_bolts.h"
 #include "libs/utils.h"
+#include "hal.h"
 
 #include "libs/USBCDCMSC/USBCDCMSC.h"
-SDFileSystem sd1(P1_24, P1_23, P1_20, P1_21, "sd"); // MiniMD board pinout
+SDFileSystem sd1(HAL::SDCard_mosi, HAL::SDCard_miso, HAL::SDCard_sclk, HAL::SDCard_cs, "sd"); // MiniMD board pinout
 //LocalFileSystem local("local");       // LPC17xx specific : comment if you are not running a mBed
 //USBCDCMSC cdcmsc(&sd);                  // LPC17xx specific : Composite serial + msc USB device
 
@@ -43,7 +43,7 @@ int main() {
     kernel->add_module( new PauseButton() );
     kernel->add_module( new Endstops() );
 
-    kernel->add_module( &cdcmsc );
+    //kernel->add_module( &cdcmsc );
    
     kernel->streams->printf("start\r\n");
 
