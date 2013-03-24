@@ -19,6 +19,7 @@ using std::string;
 #include "../communication/utils/Gcode.h"
 #include "arm_solutions/BaseSolution.h"
 #include "arm_solutions/CartesianSolution.h"
+#include "hal.h"
 
 Robot::Robot(){
     this->inch_mode = false;
@@ -53,15 +54,15 @@ void Robot::on_config_reload(void* argument){
     this->max_speeds[X_AXIS]  = this->kernel->config->value(x_axis_max_speed_checksum   )->by_default(0  )->as_number();
     this->max_speeds[Y_AXIS]  = this->kernel->config->value(y_axis_max_speed_checksum   )->by_default(0  )->as_number();
     this->max_speeds[Z_AXIS]  = this->kernel->config->value(z_axis_max_speed_checksum   )->by_default(0  )->as_number();
-    this->alpha_step_pin      =  this->kernel->config->value(alpha_step_pin_checksum               )->by_default("1.21"     )->as_pin()->as_output();
-    this->beta_step_pin       =  this->kernel->config->value(beta_step_pin_checksum                )->by_default("1.23"     )->as_pin()->as_output();
-    this->gamma_step_pin      =  this->kernel->config->value(gamma_step_pin_checksum               )->by_default("1.22!"    )->as_pin()->as_output();
-    this->alpha_dir_pin       =  this->kernel->config->value(alpha_dir_pin_checksum                )->by_default("1.18"     )->as_pin()->as_output();
-    this->beta_dir_pin        =  this->kernel->config->value(beta_dir_pin_checksum                 )->by_default("1.20"     )->as_pin()->as_output();
-    this->gamma_dir_pin       =  this->kernel->config->value(gamma_dir_pin_checksum                )->by_default("1.19"     )->as_pin()->as_output();
-    this->alpha_en_pin        =  this->kernel->config->value(alpha_en_pin_checksum                 )->by_default("0.4"      )->as_pin()->as_output()->as_open_drain();
-    this->beta_en_pin         =  this->kernel->config->value(beta_en_pin_checksum                  )->by_default("0.10"     )->as_pin()->as_output()->as_open_drain();
-    this->gamma_en_pin        =  this->kernel->config->value(gamma_en_pin_checksum                 )->by_default("0.19"     )->as_pin()->as_output()->as_open_drain();
+    this->alpha_step_pin      =  this->kernel->config->value(alpha_step_pin_checksum    )->by_default(HAL::alpha_step_pin_name )->as_pin()->as_output();
+    this->beta_step_pin       =  this->kernel->config->value(beta_step_pin_checksum     )->by_default(HAL::beta_step_pin_name  )->as_pin()->as_output();
+    this->gamma_step_pin      =  this->kernel->config->value(gamma_step_pin_checksum    )->by_default(HAL::gamma_step_pin_name )->as_pin()->as_output();
+    this->alpha_dir_pin       =  this->kernel->config->value(alpha_dir_pin_checksum     )->by_default(HAL::alpha_dir_pin_name  )->as_pin()->as_output();
+    this->beta_dir_pin        =  this->kernel->config->value(beta_dir_pin_checksum      )->by_default(HAL::beta_dir_pin_name   )->as_pin()->as_output();
+    this->gamma_dir_pin       =  this->kernel->config->value(gamma_dir_pin_checksum     )->by_default(HAL::gamma_dir_pin_name  )->as_pin()->as_output();
+    this->alpha_en_pin        =  this->kernel->config->value(alpha_en_pin_checksum      )->by_default(HAL::alpha_en_pin_name   )->as_pin()->as_output()->as_open_drain();
+    this->beta_en_pin         =  this->kernel->config->value(beta_en_pin_checksum       )->by_default(HAL::beta_en_pin_name    )->as_pin()->as_output()->as_open_drain();
+    this->gamma_en_pin        =  this->kernel->config->value(gamma_en_pin_checksum      )->by_default(HAL::gamma_en_pin_name   )->as_pin()->as_output()->as_open_drain();
 
 }
 

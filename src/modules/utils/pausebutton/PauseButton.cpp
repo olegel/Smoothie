@@ -3,6 +3,7 @@
 #include "libs/nuts_bolts.h"
 #include "libs/utils.h"
 #include <string>
+#include "hal.h"
 using namespace std;
 
 PauseButton::PauseButton(){}
@@ -14,8 +15,8 @@ void PauseButton::on_module_loaded(){
     this->register_for_event(ON_PAUSE);
 
     this->enable     =  this->kernel->config->value( pause_button_enable_checksum )->by_default(false)->as_bool();
-    this->button     =  this->kernel->config->value( pause_button_pin_checksum )->by_default("2.12")->as_pin()->as_input();
-    this->led        =  this->kernel->config->value( pause_led_pin_checksum    )->by_default("4.28")->as_pin()->as_output();
+    this->button     =  this->kernel->config->value( pause_button_pin_checksum )->by_default(HAL::pause_button_pin_name)->as_pin()->as_input();
+    this->led        =  this->kernel->config->value( pause_led_pin_checksum    )->by_default(HAL::pause_led_pin_name)->as_pin()->as_output();
 
     this->kernel->slow_ticker->attach( 100, this, &PauseButton::button_tick );
 }
