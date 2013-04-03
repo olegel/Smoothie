@@ -36,6 +36,7 @@
 #include "libs/SDFAT.h"
 
 #include "libs/Watchdog.h"
+#include "board_defaults.h"
 
 #define second_usb_serial_enable_checksum  CHECKSUM("second_usb_serial_enable")
 
@@ -43,7 +44,7 @@
 
 // #include "libs/USBCDCMSC/USBCDCMSC.h"
 // SDFileSystem sd(p5, p6, p7, p8, "sd");  // LPC17xx specific : comment if you are not using a SD card ( for example with a mBed ).
-SDCard sd(P0_9, P0_8, P0_7, P0_6);
+SDCard sd(BD::SDCard_mosi, BD::SDCard_miso, BD::SDCard_sclk, BD::SDCard_cs);
 //LocalFileSystem local("local");       // LPC17xx specific : comment if you are not running a mBed
 // USBCDCMSC cdcmsc(&sd);                  // LPC17xx specific : Composite serial + msc USB device
 
@@ -55,6 +56,7 @@ DFU dfu(&u);
 
 SDFAT mounter("sd", &sd);
 
+/*
 char buf[512];
 
 GPIO leds[5] = {
@@ -64,15 +66,15 @@ GPIO leds[5] = {
     GPIO(P1_21),
     GPIO(P4_28)
 };
-
+*/
 int main() {
-
+/*
     // Default pins to low status
     for (int i = 0; i < 5; i++){
         leds[i].output();
         leds[i] = (i & 1) ^ 1;
     }
-
+*/
     sd.disk_initialize();
 
     Kernel* kernel = new Kernel();

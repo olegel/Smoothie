@@ -23,6 +23,7 @@
 #include "modules/robot/Conveyor.h"
 #include "modules/tools/endstops/Endstops.h"
 #include <malloc.h>
+#include "board_defaults.h"
 
 
 
@@ -45,9 +46,9 @@ Kernel::Kernel(){
     // Configure UART depending on MRI config
     NVIC_SetPriorityGrouping(0);
     if( !isDebugMonitorUsingUart0() ){
-        this->serial         = new SerialConsole(USBTX, USBRX, this->config->value(uart0_checksum,baud_rate_setting_checksum)->by_default(9600)->as_number());
+        this->serial         = new SerialConsole(BD::MainSerial_TX, BD::MainSerial_RX, this->config->value(uart0_checksum,baud_rate_setting_checksum)->by_default(9600)->as_number());
     }else{
-        this->serial         = new SerialConsole(p13, p14, this->config->value(uart0_checksum,baud_rate_setting_checksum)->by_default(9600)->as_number());
+        this->serial         = new SerialConsole(BD::BackupSerial_TX, BD::BackupSerial_RX, this->config->value(uart0_checksum,baud_rate_setting_checksum)->by_default(9600)->as_number());
     }
     this->add_module( this->config );
 
